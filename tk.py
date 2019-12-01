@@ -37,7 +37,9 @@ def stop_():
 
 
 # ---------------------------------------------------------
-
+def questions():
+    file = open("questions.txt", "r")
+    questionsList=file.readlines()
 def answers():
     list = random.sample(range(0, 101), 15)
     file = open("answers.txt", "r")
@@ -328,22 +330,23 @@ def GameForm():
 
     def fun():
         nonlocal rre
+        if rre > 2:
+            rre = 0
+            next_round()
         helpListPlayers = [list_player1, list_player2, list_player3]
         convert_answers(helpListPlayers[rre])
-
         for i in playerList:
             i.config(fg='red')
         playerList[rre].config(fg='black')
         rre += 1
-        if rre > 2:
-            next_round()
-            rre = 0
+
     def next_round():
         nonlocal mainPlayer
         distribution()
         playerList.append(mainPlayer)
-        mainPlayer=playerList[0]
         mainPlayer.config(fg='red')
+        mainPlayer=playerList[0]
+
         playerList.remove(mainPlayer)
         mainPlayer.config(fg='blue')
 
@@ -420,6 +423,7 @@ def GameForm():
     btn5.pack(side='left', padx=10, pady=5, anchor='sw')
     btn5.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
     mainPlayer=lbl_
+    mainPlayer.config(fg='blue')
     playerList = [lbl_1, lbl_2, lbl_3]
     distribution()
     fun()
