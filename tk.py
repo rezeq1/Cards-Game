@@ -40,6 +40,8 @@ def stop_():
 def questions():
     file = open("questions.txt", "r")
     questionsList=file.readlines()
+    file.close()
+    return questionsList
 def answers():
     list = random.sample(range(0, 101), 15)
     file = open("answers.txt", "r")
@@ -316,6 +318,8 @@ def SittingsForm():
 
 def GameForm():
     global GameFrame
+    question=''
+    questionsList=[]
     GameFrame = Frame(windo)
     GameFrame.pack()
     start = datetime.datetime.now()
@@ -327,6 +331,14 @@ def GameForm():
         lbl_time.after(1000, times)
 
     rre = 0
+    def chose_question():
+        nonlocal question
+        questionsList = questions()
+        index=random.randint(0,len(questionsList)-1)
+        question=questionsList[index]
+        questionsList.remove(question)
+        qes.config(text=question)
+
 
     def fun():
         nonlocal rre
@@ -343,6 +355,7 @@ def GameForm():
     def next_round():
         nonlocal mainPlayer
         distribution()
+        chose_question()
         playerList.append(mainPlayer)
         mainPlayer.config(fg='red')
         mainPlayer=playerList[0]
@@ -426,7 +439,9 @@ def GameForm():
     mainPlayer.config(fg='blue')
     playerList = [lbl_1, lbl_2, lbl_3]
     distribution()
+    chose_question()
     fun()
+    
     times()
 
 
