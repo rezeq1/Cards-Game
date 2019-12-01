@@ -1,3 +1,4 @@
+import time
 from builtins import range, open
 from tkinter import *
 from tkinter import ttk
@@ -319,7 +320,8 @@ def GameForm():
 
     def times():
         elapsed = datetime.datetime.now() - start
-        lbl_time.config(text='Time is : ' + str(elapsed))
+
+        lbl_time.config(text='Time is : '+ str(elapsed))
         lbl_time.after(1000, times)
 
     rre = 0
