@@ -330,12 +330,22 @@ def GameForm():
         nonlocal rre
         helpListPlayers = [list_player1, list_player2, list_player3]
         convert_answers(helpListPlayers[rre])
+
+        for i in playerList:
+            i.config(fg='red')
+        playerList[rre].config(fg='black')
         rre += 1
-    def round_change():
-        nonlocal rre
-        helpListPlayers=[list_player1,list_player2,list_player3]
-        convert_answers(helpListPlayers[rre])
-        rre+=1
+        if rre > 2:
+            next_round()
+            rre = 0
+    def next_round():
+        nonlocal mainPlayer
+        distribution()
+        playerList.append(mainPlayer)
+        mainPlayer=playerList[0]
+        mainPlayer.config(fg='red')
+        playerList.remove(mainPlayer)
+        mainPlayer.config(fg='blue')
 
 
 
@@ -344,19 +354,20 @@ def GameForm():
     list_player3 = [' ', ' ', ' ', ' ', ' ']
     list = answers()
 
-    for i in range(5):
-        list_player1[i] = list[i]
+    def distribution():#توزيع بطاقات
+        list = answers()
+        for i in range(5):
+            list_player1[i] = list[i]
 
-    c = 0
-    for i in range(5, 10):
-        list_player2[c] = list[i]
-        c += 1
+        c = 0
+        for i in range(5, 10):
+            list_player2[c] = list[i]
+            c += 1
 
-    c = 0
-    for i in range(10, 15):
-        list_player3[c] = list[i]
-        c = c + 1
-
+        c = 0
+        for i in range(10, 15):
+            list_player3[c] = list[i]
+            c = c + 1
     def convert_answers(list_):
         btn1.config(text=list_[0])
         btn2.config(text=list_[1])
@@ -408,6 +419,10 @@ def GameForm():
     btn5 = Button(GameFrame, text="Quit", command=fun)
     btn5.pack(side='left', padx=10, pady=5, anchor='sw')
     btn5.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
+    mainPlayer=lbl_
+    playerList = [lbl_1, lbl_2, lbl_3]
+    distribution()
+    fun()
     times()
 
 
