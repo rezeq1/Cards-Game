@@ -258,7 +258,16 @@ def Register():
             lbl_result2.config(text="Successfully Created!", fg="black")
         cursor.close()
         conn.close()
-
+def Show_Winner(name):
+    RoundFrame.destroy()
+    global ShowFrame
+    ShowFrame = Frame(windo)
+    ShowFrame.pack(side=TOP, pady=80)
+    lbl_result112 = Label(ShowFrame, text='The Winner is : '+name, fg="orange")
+    lbl_result112.pack()
+    time.sleep(5)
+    ShowFrame.destroy()
+    GameForm()
 
 def Login():
     Database()
@@ -323,7 +332,12 @@ def GameForm():
     GameFrame = Frame(windo)
     GameFrame.pack()
     start = datetime.datetime.now()
-
+    def player(name,score):
+        return (name,score)
+    def addPoint(player):
+        player=list(player)
+        player[1]+=1
+        return tuple(player)
     def times():
         elapsed = datetime.datetime.now() - start
 
@@ -435,13 +449,16 @@ def GameForm():
     btn5 = Button(GameFrame, text="Quit", command=fun)
     btn5.pack(side='left', padx=10, pady=5, anchor='sw')
     btn5.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
+    player1=player(USERNAME.get(),0)
+    player2 = player(PLAYER1.get(),0)
+    player3= player(PLAYER2.get(), 0)
+    player4 = player(PLAYER3.get(), 0)
     mainPlayer=lbl_
     mainPlayer.config(fg='blue')
     playerList = [lbl_1, lbl_2, lbl_3]
     distribution()
     chose_question()
     fun()
-    
     times()
 
 
@@ -469,17 +486,6 @@ def RetMenu(event=None):
     MenuForm()
 
 
-def Show_player_round(name):
-    GameFrame.destroy()
-    global Show_player_Frame
-    Show_player_Frame = Frame(windo)
-    Show_player_Frame.pack()
-    lbl_game = Label(GameFrame, text=name, font=('arial', 50), bd=18)
-    lbl_game.pack()
-    for i in range(5, 0, -1):
-        time.sleep(1)
-    Show_player_Frame.destroy()
-    GameForm()
 
 
 def ToggleToMenu(event=None):
@@ -536,6 +542,27 @@ def HelpForm():
     newbtb1.pack()
     HelpFrame.pack()
 
+def choose_winner_round(list):
+    global RoundFrame
+    RoundFrame = Frame(windo)
+    RoundFrame.pack(side=TOP, pady=80)
+    lbl_3_ = Label(RoundFrame, text='Choose the winner ', fg='red', font=('arial', 18))
+    lbl_3_.pack(side='top', pady=5, anchor='sw')
+
+    btn1_ = Button(RoundFrame, text=list[0][1])#, command=Show_Winner(list[0][0]))
+    btn1_.pack(side='left', padx=10, pady=5, anchor='sw')
+    btn1_.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
+
+    btn2_ = Button(RoundFrame, text=list[1][1])#, command=Show_Winner(list[1][0]))
+    btn2_.pack(side='left', pady=5, anchor='sw')
+    btn2_.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
+
+    btn3_ = Button(RoundFrame, text=list[2][1])#, command=Show_Winner(list[2][0]))
+    btn3_.pack(side='left', padx=10, pady=5, anchor='sw')
+    btn3_.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
+
+
+
 
 def HelpToMenu(event=None):
     HelpFrame.destroy()
@@ -556,8 +583,8 @@ def MenuToCreadit(event=None):
     MenuFrame.destroy()
     CreaditsForm()
 
-
-LoginForm()
+choose_winner_round([('rezeq','asas'),('req','ddddd'),('rezasaseq','asddsas')])
+#LoginForm()
 
 if __name__ == '__main__':
     windo.mainloop()
