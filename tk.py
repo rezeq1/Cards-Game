@@ -331,11 +331,7 @@ def GameForm():
 
         lbl_time.config(text='Time is : '+ str(elapsed))
         lbl_time.after(1000, times)
-    def show_score():
-        lbl_.config(text='Score ' + USERNAME.get() + ' : {}'.format(players[0][2]))
-        lbl_1.config(text='Score ' + PLAYER1.get() + ' : {}'.format(players[1][2]))
-        lbl_2.config(text='Score ' + PLAYER2.get() + ' : {}'.format(players[2][2]))
-        lbl_3.config(text='Score ' + PLAYER3.get() + ' : {}'.format(players[3][2]))
+
     rre = 0
     def chose_question():
         nonlocal question
@@ -374,7 +370,6 @@ def GameForm():
             if p[1]!='':
                 newlist.append(p)
         Game_to_winner_round(newlist)
-        print(newlist)
         for p in list:#clear answers
             p[1]=''
         distribution()
@@ -417,7 +412,7 @@ def GameForm():
     filemenu.add_command(label="Exit", command=Exit)
     menubar.add_cascade(label="File", menu=filemenu)
     windo.config(menu=menubar)
-
+    global lbl_,lbl_1,lbl_2,lbl_3,players
     lbl_time = Label(GameFrame, fg='red', font=('arial', 18))
     lbl_time.pack(side='top', pady=5, anchor='sw')
     players = [player(USERNAME.get(), '', 0), player(PLAYER1.get(), '', 0), player(PLAYER2.get(), '', 0),player(PLAYER3.get(), '', 0)]  # list of players names and score and answer
@@ -463,7 +458,11 @@ def GameForm():
     chose_question()
     fun(btn1['text'])
     times()
-
+def show_score():
+    lbl_.config(text='Score ' + USERNAME.get() + ' : {}'.format(players[0][2]))
+    lbl_1.config(text='Score ' + PLAYER1.get() + ' : {}'.format(players[1][2]))
+    lbl_2.config(text='Score ' + PLAYER2.get() + ' : {}'.format(players[2][2]))
+    lbl_3.config(text='Score ' + PLAYER3.get() + ' : {}'.format(players[3][2]))
 
 def ChangeBackGround():
     if COLORH.get() == "light green":
@@ -564,12 +563,14 @@ def choose_winner_round(list):
     btn3_.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
 
     def Show_Winner(Winner_rond):
-        print(Winner_rond)
         RoundFrame.forget()
         global ShowFrame
         ShowFrame = Frame(windo)
         ShowFrame.pack()
         Winner_rond[2] += 1
+        if Winner_rond[2]>=5:
+            print(Winner_rond)
+            Exit()
         lbl_result112 = Label(ShowFrame, text='The Winner is : ' + Winner_rond[0], font=('arial', 50), bd=18)
         lbl_result112.pack()
         btnn2_ = Button(ShowFrame, text='Press Here To Continue', command=Winner_round_to_gamer)
@@ -584,6 +585,7 @@ def Game_to_winner_round(list):
 def Winner_round_to_gamer(event=None):
     ShowFrame.destroy()
     GameFrame.pack()
+    show_score()
 
 
 
