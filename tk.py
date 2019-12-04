@@ -258,16 +258,7 @@ def Register():
             lbl_result2.config(text="Successfully Created!", fg="black")
         cursor.close()
         conn.close()
-def Show_Winner(name):
-    RoundFrame.destroy()
-    global ShowFrame
-    ShowFrame = Frame(windo)
-    ShowFrame.pack(side=TOP, pady=80)
-    lbl_result112 = Label(ShowFrame, text='The Winner is : '+name, fg="orange")
-    lbl_result112.pack()
-    time.sleep(5)
-    ShowFrame.destroy()
-    GameForm()
+
 
 def Login():
     Database()
@@ -332,12 +323,9 @@ def GameForm():
     GameFrame = Frame(windo)
     GameFrame.pack()
     start = datetime.datetime.now()
-    def player(name,score):
-        return (name,score)
-    def addPoint(player):
-        player=list(player)
-        player[1]+=1
-        return tuple(player)
+    def player(name,answer,score):
+        return [name,answer,score]
+
     def times():
         elapsed = datetime.datetime.now() - start
 
@@ -354,30 +342,44 @@ def GameForm():
         qes.config(text=question)
 
 
-    def fun():
+
+    def fun(btn):
         nonlocal rre
         if rre > 2:
             rre = 0
-            next_round()
+            next_round(players)
         helpListPlayers = [list_player1, list_player2, list_player3]
         convert_answers(helpListPlayers[rre])
         for i in playerList:
             i.config(fg='red')
         playerList[rre].config(fg='black')
         rre += 1
+    def funcc(btn):
+        save_Player_answer(btn)
+        fun(btn)
+    def save_Player_answer(btn):#بحفظ جواب كل لاعب
+        playerName=playerList[rre-1]['text'][6:-4]
+        for p in players:
+            if p[0]==playerName:
+                p[1]=btn['text']
+    def next_round(list):
 
-    def next_round():
         nonlocal mainPlayer
+        newlist=[]
+        for p in list:
+            if p[1]!='':
+                newlist.append(p)
+        Game_to_winner_round(newlist)
+        for p in list:#clear answers
+            p[1]=''
         distribution()
         chose_question()
         playerList.append(mainPlayer)
         mainPlayer.config(fg='red')
         mainPlayer=playerList[0]
-
         playerList.remove(mainPlayer)
         mainPlayer.config(fg='blue')
-
-
+        print(players)
 
     list_player1 = [' ', ' ', ' ', ' ', ' ']
     list_player2 = [' ', ' ', ' ', ' ', ' ']
@@ -413,52 +415,47 @@ def GameForm():
 
     lbl_time = Label(GameFrame, fg='red', font=('arial', 18))
     lbl_time.pack(side='top', pady=5, anchor='sw')
-
-    lbl_ = Label(GameFrame, text='Score ' + USERNAME.get() + ' : ', fg='red', font=('arial', 18))
+    players = [player(USERNAME.get(), '', 0), player(PLAYER1.get(), '', 0), player(PLAYER2.get(), '', 0),player(PLAYER3.get(), '', 0)]  # list of players names and score and answer
+    lbl_ = Label(GameFrame, text='Score ' + USERNAME.get() + ' : {}'.format(players[0][2]), fg='red', font=('arial', 18))
     lbl_.pack(side='top', pady=5, anchor='sw')
 
-    lbl_1 = Label(GameFrame, text='Score ' + PLAYER1.get() + ' : ', fg='red', font=('arial', 18))
+    lbl_1 = Label(GameFrame, text='Score ' + PLAYER1.get() + ' : {}'.format(players[1][2]) ,fg='red', font=('arial', 18))
     lbl_1.pack(side='top', pady=5, anchor='sw')
-
-    lbl_2 = Label(GameFrame, text='Score ' + PLAYER2.get() + ' : ', fg='red', font=('arial', 18))
+    
+    lbl_2 = Label(GameFrame, text='Score ' + PLAYER2.get() + ' : {}'.format(players[2][2]) ,fg='red', font=('arial', 18))
     lbl_2.pack(side='top', pady=5, anchor='sw')
 
-    lbl_3 = Label(GameFrame, text='Score ' + PLAYER3.get() + ' : ', fg='red', font=('arial', 18))
+    lbl_3 = Label(GameFrame, text='Score ' + PLAYER3.get() + ' : {}'.format(players[3][2]), fg='red', font=('arial', 18))
     lbl_3.pack(side='top', pady=5, anchor='sw')
 
     qes = Button(GameFrame, text="aa")
     qes.pack(side='top', padx=10, pady=5, anchor='s')
     qes.config(image=Question, compound='center', fg='red', font=('arial', 18))
-
-    btn1 = Button(GameFrame, text="Click", command=fun)
+    btn1 = Button(GameFrame, text="Click", command=lambda:funcc(btn1))
     btn1.pack(side='left', padx=10, pady=5, anchor='sw')
     btn1.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
 
-    btn2 = Button(GameFrame, text="Quit", command=fun)
+    btn2 = Button(GameFrame, text="Quit", command=lambda:funcc(btn2))
     btn2.pack(side='left', pady=5, anchor='sw')
     btn2.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
 
-    btn3 = Button(GameFrame, text="Click", command=fun)
+    btn3 = Button(GameFrame, text="Click", command=lambda:funcc(btn3))
     btn3.pack(side='left', padx=10, pady=5, anchor='sw')
     btn3.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
 
-    btn4 = Button(GameFrame, text="Quit", command=fun)
+    btn4 = Button(GameFrame, text="Quit", command=lambda:funcc(btn4))
     btn4.pack(side='left', pady=5, anchor='sw')
     btn4.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
 
-    btn5 = Button(GameFrame, text="Quit", command=fun)
+    btn5 = Button(GameFrame, text="Quit", command=lambda:funcc(btn5))
     btn5.pack(side='left', padx=10, pady=5, anchor='sw')
     btn5.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
-    player1=player(USERNAME.get(),0)
-    player2 = player(PLAYER1.get(),0)
-    player3= player(PLAYER2.get(), 0)
-    player4 = player(PLAYER3.get(), 0)
     mainPlayer=lbl_
     mainPlayer.config(fg='blue')
     playerList = [lbl_1, lbl_2, lbl_3]
     distribution()
     chose_question()
-    fun()
+    fun(btn1['text'])
     times()
 
 
@@ -542,25 +539,43 @@ def HelpForm():
     newbtb1.pack()
     HelpFrame.pack()
 
+
 def choose_winner_round(list):
     global RoundFrame
     RoundFrame = Frame(windo)
-    RoundFrame.pack(side=TOP, pady=80)
+    RoundFrame.pack()
     lbl_3_ = Label(RoundFrame, text='Choose the winner ', fg='red', font=('arial', 18))
     lbl_3_.pack(side='top', pady=5, anchor='sw')
-
-    btn1_ = Button(RoundFrame, text=list[0][1])#, command=Show_Winner(list[0][0]))
+    btn1_ = Button(RoundFrame, text=list[0][1],command=lambda :Show_Winner(list[0]))
     btn1_.pack(side='left', padx=10, pady=5, anchor='sw')
     btn1_.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
-
-    btn2_ = Button(RoundFrame, text=list[1][1])#, command=Show_Winner(list[1][0]))
+    btn2_ = Button(RoundFrame, text=list[1][1], command=lambda :Show_Winner(list[1]))
     btn2_.pack(side='left', pady=5, anchor='sw')
     btn2_.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
-
-    btn3_ = Button(RoundFrame, text=list[2][1])#, command=Show_Winner(list[2][0]))
+    btn3_ = Button(RoundFrame, text=list[2][1],command=lambda :Show_Winner(list[2]))
     btn3_.pack(side='left', padx=10, pady=5, anchor='sw')
     btn3_.config(image=buttonImag, compound='center', fg='#ffffff', font=('arial', 18))
 
+def Show_Winner(Winner_rond):
+    RoundFrame.destroy()
+    global ShowFrame
+    ShowFrame = Frame(windo)
+    ShowFrame.pack()
+    Winner_rond[2]+=1
+    lbl_result112 = Label(ShowFrame, text='The Winner is : '+Winner_rond[0], font=('arial', 50), bd=18)
+    lbl_result112.pack()
+    btnn2_ = Button(ShowFrame, text='Press Here To Continue', command=Winner_round_to_gamer)
+    btnn2_.pack(side='left', pady=5, anchor='sw')
+    btnn2_.config(compound='center', fg='purple', font=('arial', 18))
+
+
+def Game_to_winner_round(list):
+    GameFrame.forget()
+    choose_winner_round(list)
+
+def Winner_round_to_gamer(event=None):
+    ShowFrame.destroy()
+    GameFrame.pack()
 
 
 
@@ -583,8 +598,8 @@ def MenuToCreadit(event=None):
     MenuFrame.destroy()
     CreaditsForm()
 
-choose_winner_round([('rezeq','asas'),('req','ddddd'),('rezasaseq','asddsas')])
-#LoginForm()
+#choose_winner_round([('rezeq','asas'),('req','ddddd'),('rezasaseq','asddsas')])
+LoginForm()
 
 if __name__ == '__main__':
     windo.mainloop()
