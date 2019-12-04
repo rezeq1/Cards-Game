@@ -568,14 +568,13 @@ def choose_winner_round(list):
         ShowFrame = Frame(windo)
         ShowFrame.pack()
         Winner_rond[2] += 1
-        if Winner_rond[2]>=5:
-            print(Winner_rond)
-            Exit()
         lbl_result112 = Label(ShowFrame, text='The Winner is : ' + Winner_rond[0], font=('arial', 50), bd=18)
         lbl_result112.pack()
         btnn2_ = Button(ShowFrame, text='Press Here To Continue', command=Winner_round_to_gamer)
         btnn2_.pack(side='left', pady=5, anchor='sw')
         btnn2_.config(compound='center', fg='purple', font=('arial', 18))
+        if Winner_rond[2]>=5:
+            ShowToChoises()
 
 
 def Game_to_winner_round(list):
@@ -608,8 +607,34 @@ def MenuToCreadit(event=None):
     MenuFrame.destroy()
     CreaditsForm()
 
-#choose_winner_round([('rezeq','asas'),('req','ddddd'),('rezasaseq','asddsas')])
+
 LoginForm()
 
+
+def ChoisesToMenu(event=None):
+    ChoesisFrame.destroy()
+    MenuForm()
+
+
+def ShowToChoises(event=None):
+    ShowFrame.destroy()
+    ChoesisForm()
+
+
+def ChoesisForm():
+    global ChoesisFrame
+    ChoesisFrame = Frame(windo)
+    ChoesisFrame.pack()
+
+    bl_result112 = Label(ChoesisFrame, text='Choose one from this options', font=('arial', 50), bd=18)
+    bl_result112.pack()
+
+    tnn2_ = Button(ChoesisFrame, text='Exit', command=Exit)
+    tnn2_.pack(side='left', pady=5, anchor='sw')
+    tnn2_.config(compound='center', fg='purple', font=('arial', 18))
+
+    tnn3_ = Button(ChoesisFrame, text='Return to menu', command=ChoisesToMenu)
+    tnn3_.pack(side='left', pady=5, anchor='sw')
+    tnn3_.config(compound='center', fg='purple', font=('arial', 18))
 if __name__ == '__main__':
     windo.mainloop()
