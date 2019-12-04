@@ -43,7 +43,7 @@ def questions():
     file.close()
     return questionsList
 def answers():
-    list = random.sample(range(0, 199), 15)
+    list = random.sample(range(0, 142), 15)
     file = open("answers.txt", "r")
     string_word = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
     stre = file.readlines()
