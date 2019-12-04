@@ -1,51 +1,50 @@
-jjjjjj
-Firefox 
-was made by
- what community? 
-Mozilla 
-Apple 
-IBM
- Oracle
-What animal
-is Tux, the 
-Linux mascot? 
-Penguin Mouse
-Horse ; Spider
-Which Linux OS 
-is commonly recommended 
-for beginners? 
-Ubuntu ; Gentoo
- FreeBSD ; Fedora
-What is Audacity 
-used for? ; Audio 
- Art ; Programming 
- Gaming
-Which one
- of the following 
- open source? 
- MySQL ; Windows
- iTunes ; Photoshop
-What language was the 
-Linux kernel written in? 
-C ; Java ; C++ 
-Ruby
-Which one of the
-following is an open
-source license? 
- GPL ; FTP 
-GUID ; API
-The proper 
-format to add
- a question is:
-question ; correct answer 
-wrong answer ; wrong answer 
- wrong answer
-Each term is separated 
-with a colon
-This file is
- used to store 
-questions and is
- read by Gunvir's
- Quiz Game
-rezeq here
-hello rezeq
+ילדים
+חברות
+העתיד
+קינוחים
+רומנטיקה
+שותפות
+משפחה
+מסיבות
+אי בודד
+זוגית
+החגים
+הגיל שלי
+ספורט
+העבר
+ספרים
+דאיטה
+מתנות
+חופשה
+הילדות שלי
+שינוי
+גן עדן
+טבע האדם
+בית ספר
+טבענות
+יום הולדת
+קעקועים
+כסף
+פייסביק
+בית
+אוכל
+פוליטיקה
+מזל
+חלומות
+שנת צהורים
+חיות מחמד
+הצלחה
+רוחבנות
+דיור מוגן
+עבודה
+האהבה הראשונה
+פינוק
+חורף
+הטלפון שלי
+ההורים שלי
+לימודים
+עליך
+סלבריטיז
+קניות
+תחרות
+קיץ
