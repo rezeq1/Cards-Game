@@ -188,10 +188,11 @@ def Admin_Form():
             result = tkMessageBox.askquestion('System', 'Are you sure you want to remove the player', icon="warning")
             if result == 'yes':
                 cursor.execute("delete from players where username= ?", (remove_player.get(),))
+                conn.commit()
 
 
         else:
-            print("no")
+            tkMessageBox.showinfo('System','this name is not exsists', icon="warning")
 
     remove_button = Button(AdminFrame, text='Remove', width=19, height=2, command=Remove_player)
     remove_button.grid(row=21, column=2)
